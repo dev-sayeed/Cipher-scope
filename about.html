@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Security Architecture &amp; Developer — CipherScope</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="about">
+
+  <!-- TOP NAVIGATION -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">&gt;_</span>
+        <span>CipherScope</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Analyzer</a>
+        <a href="generator.html" class="nav-link">Generator</a>
+        <a href="math.html" class="nav-link">Entropy Math</a>
+        <a href="about.html" class="nav-link active">Architecture</a>
+      </nav>
+
+      <div class="privacy-pill">
+        <span class="pulse-dot"></span>
+        <span>Zero-Telemetry Design</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">// Client-Side Privacy &amp; Engineering Notes</span>
+      <h1>Security Architecture &amp; Author</h1>
+      <p class="hero-sub">
+        How CipherScope guarantees zero credential exposure, plus the technical background behind the project.
+      </p>
+    </section>
+
+    <!-- TWO-COLUMN: SECURITY GUARANTEES & DEVELOPER CARD -->
+    <section class="grid-2">
+      <!-- Left: Zero-Trust Client Architecture -->
+      <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+          <span class="panel-title">Zero-Network Security Model</span>
+          <span class="status-badge" style="color: var(--accent-emerald);">Verified</span>
+        </div>
+
+        <ul class="diag-list">
+          <li class="diag-item good">
+            <span>🔒</span>
+            <div>
+              <strong>100% Local Execution:</strong> All Shannon entropy math, regex heuristic checks, and crack-time simulations run exclusively inside your browser's JavaScript engine.
+            </div>
+          </li>
+          <li class="diag-item good">
+            <span>🎲</span>
+            <div>
+              <strong>Hardware-Backed CSPRNG:</strong> The Credential Studio uses <code>window.crypto.getRandomValues()</code> rather than predictable <code>Math.random()</code> seeds.
+            </div>
+          </li>
+          <li class="diag-item good">
+            <span>🚫</span>
+            <div>
+              <strong>No Storage or Analytics:</strong> Passwords are never saved to <code>localStorage</code>, cookies, or external APIs—refreshing the tab wipes memory completely.
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right: Author & Credentials Card -->
+      <div class="panel" style="margin-bottom: 0; display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div class="panel-header">
+            <span class="panel-title">Developed by Sayeed Akhter</span>
+            <span class="status-badge">BCA &amp; Educator</span>
+          </div>
+
+          <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 16px;">
+            Bachelor of Computer Applications (BCA) graduate and Computer Science educator focused on cybersecurity fundamentals, networking architecture, and practical web engineering.
+          </p>
+
+          <div class="char-pills" style="margin-bottom: 20px;">
+            <span class="char-pill active">IBM SkillsBuild: Cybersecurity Fundamentals</span>
+            <span class="char-pill active">Cisco NetAcad: Networking Basics</span>
+            <span class="char-pill active">HTML5 / CSS3 / Vanilla JS</span>
+            <span class="char-pill active">Web Crypto API</span>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="https://www.linkedin.com/in/sayeed-akhter?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener noreferrer" class="btn-primary" style="text-decoration: none; text-align: center; flex: 1;">
+            Connect on LinkedIn
+          </a>
+          <a href="https://github.com/dev-sayeed" target="_blank" rel="noopener noreferrer" class="icon-btn" style="text-decoration: none; display: inline-flex; align-items: center; justify-content: center; padding: 12px 18px; font-size: 0.9rem;">
+            GitHub Source
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>Built by <strong>Sayeed</strong> &bull; Cybersecurity &amp; Web Engineering Portfolio</span>
+      <span><a href="index.html">&larr; Back to Live Analyzer</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CipherScope — Password Entropy & Attack Simulator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="analyzer">
+
+  <!-- TOP NAVIGATION -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">&gt;_</span>
+        <span>CipherScope</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link active">Analyzer</a>
+        <a href="generator.html" class="nav-link">Generator</a>
+        <a href="math.html" class="nav-link">Entropy Math</a>
+        <a href="about.html" class="nav-link">Architecture</a>
+      </nav>
+
+      <div class="privacy-pill" title="All calculations run locally in your browser">
+        <span class="pulse-dot"></span>
+        <span>100% Client-Side</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">// Cryptographic Telemetry &amp; Keyspace Audit</span>
+      <h1>Password Strength &amp; Entropy Analyzer</h1>
+      <p class="hero-sub">
+        Measure true Shannon bit entropy, detect predictable human patterns, and simulate brute-force resistance across modern hardware clusters—without a single byte leaving your browser.
+      </p>
+    </section>
+
+    <!-- PASSWORD INPUT & METER PANEL -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Target Credential Input</span>
+        <span style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted);">
+          Tip: Try typing "Password123!" vs "correct-horse-battery-74"
+        </span>
+      </div>
+
+      <div class="input-wrapper">
+        <input
+          type="password"
+          id="passwordInput"
+          class="password-input"
+          placeholder="Type or paste a password to analyze..."
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <div class="input-actions">
+          <button type="button" id="toggleVisibilityBtn" class="icon-btn">Show</button>
+          <button type="button" id="clearInputBtn" class="icon-btn">Clear</button>
+        </div>
+      </div>
+
+      <!-- Strength Meter -->
+      <div class="meter-track">
+        <div id="meterFill" class="meter-fill"></div>
+      </div>
+
+      <div class="meter-meta">
+        <span>Security Verdict: <strong id="strengthVerdict" class="status-badge">Awaiting Input</strong></span>
+        <span id="rawVsEffective" style="color: var(--text-secondary);">Raw: 0 bits | Effective: 0 bits</span>
+      </div>
+
+      <!-- Character Set Detection Pills -->
+      <div class="char-pills">
+        <span id="pillLower" class="char-pill">[a-z] Lowercase (26)</span>
+        <span id="pillUpper" class="char-pill">[A-Z] Uppercase (26)</span>
+        <span id="pillDigit" class="char-pill">[0-9] Digits (10)</span>
+        <span id="pillSymbol" class="char-pill">[!@#] Symbols (33)</span>
+      </div>
+    </section>
+
+    <!-- 4-CARD TELEMETRY GRID -->
+    <section class="grid-4">
+      <div class="metric-card">
+        <div class="metric-label">Effective Entropy</div>
+        <div id="metricEntropy" class="metric-value">0.0 bits</div>
+        <div class="metric-sub">Adjusted for pattern penalties</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Character Pool (N)</div>
+        <div id="metricPool" class="metric-value">0</div>
+        <div class="metric-sub">Active symbol space</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Length (L)</div>
+        <div id="metricLength" class="metric-value">0 chars</div>
+        <div class="metric-sub">Recommended: 14+ characters</div>
+      </div>
+
+      <div class="metric-card">
+        <div class="metric-label">Keyspace Combinations</div>
+        <div id="metricCombinations" class="metric-value">0</div>
+        <div class="metric-sub">Total possible guesses (N^L)</div>
+      </div>
+    </section>
+
+    <!-- TWO-COLUMN BREAKDOWN: CRACK TIME MATRIX & VULNERABILITY DIAGNOSTICS -->
+    <section class="grid-2">
+      <!-- Left: Attack Scenarios -->
+      <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+          <span class="panel-title">Brute-Force Crack Time Estimates</span>
+        </div>
+
+        <div class="attack-row">
+          <div>
+            <div class="attack-name">Online Throttled Attack</div>
+            <div class="attack-spec">Rate-limited login form (~100 guesses/sec)</div>
+          </div>
+          <div id="timeOnline" class="attack-time">—</div>
+        </div>
+
+        <div class="attack-row">
+          <div>
+            <div class="attack-name">Standard Laptop CPU</div>
+            <div class="attack-spec">Slow bcrypt/Argon2 hash (~10K guesses/sec)</div>
+          </div>
+          <div id="timeCpu" class="attack-time">—</div>
+        </div>
+
+        <div class="attack-row">
+          <div>
+            <div class="attack-name">8x RTX 4090 GPU Rig</div>
+            <div class="attack-spec">Fast NTLM/SHA-256 hash (~100B guesses/sec)</div>
+          </div>
+          <div id="timeGpu" class="attack-time">—</div>
+        </div>
+
+        <div class="attack-row">
+          <div>
+            <div class="attack-name">Distributed Botnet / Supercluster</div>
+            <div class="attack-spec">Unsalted MD5 array (~10T guesses/sec)</div>
+          </div>
+          <div id="timeCluster" class="attack-time">—</div>
+        </div>
+      </div>
+
+      <!-- Right: Pattern & Heuristic Diagnostics -->
+      <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+          <span class="panel-title">Pattern &amp; Heuristic Diagnostics</span>
+        </div>
+
+        <ul id="diagnosticsList" class="diag-list">
+          <li class="diag-item">
+            <span>ℹ️</span>
+            <span>Enter a password above to run real-time pattern detection (keyboard walks, common years, repeated sequences, and leet-speak checks).</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>Built by <strong>Sayeed Akhter</strong> &bull; Cybersecurity &amp; Web Engineering Portfolio</span>
+      <span><a href="generator.html">Next: Cryptographic Generator &rarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

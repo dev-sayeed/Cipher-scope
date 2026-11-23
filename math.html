@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Entropy Math &amp; Hashing — CipherScope</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="math">
+
+  <!-- TOP NAVIGATION -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">&gt;_</span>
+        <span>CipherScope</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Analyzer</a>
+        <a href="generator.html" class="nav-link">Generator</a>
+        <a href="math.html" class="nav-link active">Entropy Math</a>
+        <a href="about.html" class="nav-link">Architecture</a>
+      </nav>
+
+      <div class="privacy-pill">
+        <span class="pulse-dot"></span>
+        <span>Cryptography Reference</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">// Information Theory &amp; Defense-in-Depth</span>
+      <h1>The Mathematics of Password Entropy</h1>
+      <p class="hero-sub">
+        Understanding why length mathematically dominates complexity, how attackers model human predictability, and why slow cryptographic hashing protects breached databases.
+      </p>
+    </section>
+
+    <!-- SHANNON ENTROPY FORMULA PANEL -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">1. Calculating Bit Entropy (H)</span>
+        <span class="status-badge">Information Theory</span>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.94rem;">
+        In cryptography, <strong>entropy</strong> measures the unpredictability of a credential in bits. Every additional bit of entropy <em>doubles</em> the number of guesses an attacker must make on average.
+      </p>
+
+      <div class="formula-box">
+        H = L &times; log<sub>2</sub>(N)
+      </div>
+
+      <div class="grid-2" style="margin-top: 16px; margin-bottom: 0;">
+        <div class="metric-card">
+          <div class="metric-label">Variable L (Length)</div>
+          <div class="metric-value" style="font-size: 1.15rem; color: var(--accent-cyan);">Total Characters</div>
+          <div class="metric-sub">Grows entropy linearly—increasing L multiplies the exponent in N<sup>L</sup>.</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Variable N (Pool Size)</div>
+          <div class="metric-value" style="font-size: 1.15rem; color: var(--accent-emerald);">26 to 95 Symbols</div>
+          <div class="metric-sub">Lowercase (26) + Uppercase (26) + Digits (10) + Printable Symbols (33).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LENGTH VS COMPLEXITY COMPARISON -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">2. Length vs. Complexity: Side-by-Side Comparison</span>
+        <span class="status-badge" style="color: var(--accent-amber);">NIST SP 800-63B</span>
+      </div>
+
+      <div class="attack-row">
+        <div>
+          <div class="attack-name" style="font-family: var(--font-mono); color: var(--accent-crimson);">P@ssw0rd!</div>
+          <div class="attack-spec">9 chars &bull; Uses all 4 character sets, but follows predictable leet-speak + dictionary pattern</div>
+        </div>
+        <div class="attack-time" style="color: var(--accent-crimson);">~28 Effective Bits (Cracked in milliseconds)</div>
+      </div>
+
+      <div class="attack-row">
+        <div>
+          <div class="attack-name" style="font-family: var(--font-mono); color: var(--accent-amber);">Tr0ub4dor&amp;3</div>
+          <div class="attack-spec">11 chars &bull; Hard for humans to type/remember, vulnerable to rule-based GPU mangling</div>
+        </div>
+        <div class="attack-time" style="color: var(--accent-amber);">~44 Effective Bits (Cracked in hours)</div>
+      </div>
+
+      <div class="attack-row">
+        <div>
+          <div class="attack-name" style="font-family: var(--font-mono); color: var(--accent-emerald);">glacier-orbit-velvet-cipher</div>
+          <div class="attack-spec">26 chars &bull; 4 random lowercase words separated by hyphens (easy to type, massive keyspace)</div>
+        </div>
+        <div class="attack-time" style="color: var(--accent-emerald);">~122 Raw Bits (Centuries+ against GPU rigs)</div>
+      </div>
+    </section>
+
+    <!-- HASHING ALGORITHMS EXPLAINER -->
+    <section class="panel">
+      <div class="panel-header">
+        <span class="panel-title">3. Why Storage Hashing Matters (MD5 vs. Argon2id)</span>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.94rem; margin-bottom: 16px;">
+        Even a strong password can be compromised if a server stores it using a fast cryptographic checksum like MD5 or SHA-1 instead of a memory-hard key derivation function:
+      </p>
+
+      <ul class="diag-list">
+        <li class="diag-item danger">
+          <span>⚠️</span>
+          <div>
+            <strong>Unsalted MD5 / SHA-1 (Broken for Passwords):</strong> Designed for speed. A modern multi-GPU rig can compute over 100 billion hashes per second and look up precomputed Rainbow Tables instantly.
+          </div>
+        </li>
+        <li class="diag-item warn">
+          <span>🛡️</span>
+          <div>
+            <strong>bcrypt / PBKDF2 (Industry Standard):</strong> Introduces a unique cryptographic <em>salt</em> per user (defeating Rainbow Tables) and a configurable work factor that deliberately slows down brute-force attempts.
+          </div>
+        </li>
+        <li class="diag-item good">
+          <span>🔒</span>
+          <div>
+            <strong>Argon2id (OWASP Top Recommendation):</strong> Memory-hard algorithm that requires dedicated RAM per guess, neutralizing parallel GPU and ASIC cracking hardware.
+          </div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>Built by <strong>Sayeed Akhter</strong> &bull; Cybersecurity &amp; Web Engineering Portfolio</span>
+      <span><a href="about.html">Next: Security Architecture &amp; Developer Profile &rarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

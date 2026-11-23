@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cryptographic Generator — CipherScope</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body data-page="generator">
+
+  <!-- TOP NAVIGATION -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-icon">&gt;_</span>
+        <span>CipherScope</span>
+      </a>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="index.html" class="nav-link">Analyzer</a>
+        <a href="generator.html" class="nav-link active">Generator</a>
+        <a href="math.html" class="nav-link">Entropy Math</a>
+        <a href="about.html" class="nav-link">Architecture</a>
+      </nav>
+
+      <div class="privacy-pill" title="Uses Web Crypto API CSPRNG">
+        <span class="pulse-dot"></span>
+        <span>Web Crypto CSPRNG</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="container">
+    <section class="hero">
+      <span class="eyebrow">// Hardware-Seeded CSPRNG Utility</span>
+      <h1>Cryptographic Credential Studio</h1>
+      <p class="hero-sub">
+        Generate unbiased random passwords and Diceware-style passphrases powered by your browser's native <code>window.crypto.getRandomValues()</code> entropy pool.
+      </p>
+    </section>
+
+    <section class="grid-2">
+      <!-- LEFT PANEL: RANDOM CHARACTER GENERATOR -->
+      <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+          <span class="panel-title">1. Random Character String</span>
+          <span id="genRandomEntropy" class="status-badge" style="color: var(--accent-emerald);">~104 bits</span>
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 16px;">
+          <input
+            type="text"
+            id="randomOutput"
+            class="password-input"
+            readonly
+            style="font-size: 1rem; padding-right: 135px;"
+          />
+          <div class="input-actions">
+            <button type="button" id="copyRandomBtn" class="icon-btn">Copy</button>
+            <button type="button" id="analyzeRandomBtn" class="icon-btn" style="color: var(--accent-cyan);">Audit</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Character Length</span>
+            <strong id="lengthDisplay" style="color: var(--accent-cyan); font-family: var(--font-mono);">16 chars</strong>
+          </div>
+          <input type="range" id="lengthSlider" min="8" max="64" value="16" />
+        </div>
+
+        <div class="checkbox-grid">
+          <label class="check-card">
+            <input type="checkbox" id="chkUpper" checked />
+            <span>Uppercase (A–Z)</span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" id="chkLower" checked />
+            <span>Lowercase (a–z)</span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" id="chkNumbers" checked />
+            <span>Digits (0–9)</span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" id="chkSymbols" checked />
+            <span>Symbols (!@#$%)</span>
+          </label>
+        </div>
+
+        <label class="check-card" style="margin-bottom: 18px;">
+          <input type="checkbox" id="chkNoAmbiguous" />
+          <span>Exclude ambiguous characters (0, O, 1, l, I)</span>
+        </label>
+
+        <button type="button" id="generateRandomBtn" class="btn-primary" style="width: 100%;">
+          Regenerate Cryptographic String
+        </button>
+      </div>
+
+      <!-- RIGHT PANEL: MEMORABLE PASSPHRASE GENERATOR -->
+      <div class="panel" style="margin-bottom: 0;">
+        <div class="panel-header">
+          <span class="panel-title">2. Diceware Memorable Passphrase</span>
+          <span id="genPhraseEntropy" class="status-badge" style="color: var(--accent-cyan);">~64 bits</span>
+        </div>
+
+        <div class="input-wrapper" style="margin-bottom: 16px;">
+          <input
+            type="text"
+            id="phraseOutput"
+            class="password-input"
+            readonly
+            style="font-size: 0.98rem; padding-right: 135px;"
+          />
+          <div class="input-actions">
+            <button type="button" id="copyPhraseBtn" class="icon-btn">Copy</button>
+            <button type="button" id="analyzePhraseBtn" class="icon-btn" style="color: var(--accent-cyan);">Audit</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <div class="control-label">
+            <span>Word Count</span>
+            <strong id="wordCountDisplay" style="color: var(--accent-cyan); font-family: var(--font-mono);">4 words</strong>
+          </div>
+          <input type="range" id="wordCountSlider" min="3" max="8" value="4" />
+        </div>
+
+        <div class="checkbox-grid">
+          <label class="check-card">
+            <input type="checkbox" id="chkCapitalize" checked />
+            <span>Capitalize Words</span>
+          </label>
+          <label class="check-card">
+            <input type="checkbox" id="chkAddNumber" checked />
+            <span>Append 2-Digit Salt</span>
+          </label>
+        </div>
+
+        <div class="diag-item good" style="margin-bottom: 18px;">
+          <span>💡</span>
+          <span>
+            <strong>Why Passphrases Win:</strong> Four random dictionary words are dramatically easier for humans to type and remember than <code>P@ssw0rd!</code> while offering far higher resistance to GPU brute-force clusters.
+          </span>
+        </div>
+
+        <button type="button" id="generatePhraseBtn" class="btn-primary" style="width: 100%;">
+          Generate New Passphrase
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <span>Built by <strong>Sayeed Akhter</strong> &bull; Cybersecurity &amp; Web Engineering Portfolio</span>
+      <span><a href="math.html">Next: How Entropy Math Works &rarr;</a></span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
